@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import axios from 'axios';
-
-function App() {
-  const [data, setData] = useState<any>([]);
-
-  const fetchUrl = 'http://colormind.io/api/';
-  const fetchData: any = {
-    model: 'Default',
-  };
-
-  const headers = {
-    'Content-Type': 'text/plain',
-  };
+import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
+import { serverModel } from './interfaces/index';
+function App(): JSX.Element {
+  const [data, setData] = useState<number[][] | null>(null);
+  //This will fetch the random color pallette
 
   useEffect(() => {
+    const fetchUrl: string = 'http://colormind.io/api/';
+    const fetchData: serverModel = {
+      model: 'default',
+    };
+    const headers: AxiosRequestHeaders = {
+      'Content-Type': 'text/plain',
+    };
     axios
-      .post(fetchUrl, fetchData, { headers })
-      .then((res) => console.log(res.data));
-  }, [data]);
-
+      .post<number[][] | null>(fetchUrl, fetchData, { headers })
+      .then((res: AxiosResponse<number[][] | null>) => setData(res.data));
+  }, []);
+  //This will fetch the random color pallette
   return (
     <>
       <div className='text-7xl font-bold underline'>Hello world!</div>
