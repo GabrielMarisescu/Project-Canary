@@ -8,11 +8,6 @@ module.exports = {
       lg: '976px',
       xl: '1440px',
     },
-    colors: {
-      color1: '#1fb6ff',
-      color2: '#7e5bef',
-      color3: '#ff49db',
-    },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
