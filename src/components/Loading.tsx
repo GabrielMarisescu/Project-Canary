@@ -4,8 +4,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { CircularProgress } from '@material-ui/core';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
-export const LoadingPage = () => {
+export const LoadingPage = (): EmotionJSX.Element => {
   const styles = {
     root: css`
       display: flex;

@@ -19,11 +19,13 @@ function App(): JSX.Element {
     };
 
     axios
-      .post<any>(fetchUrl, fetchData, { headers })
-      .then((res: AxiosResponse<number[]>) => setcolors(res.data));
+      .post<AxiosResponse<string, serverModel>, any>(fetchUrl, fetchData, {
+        headers,
+      })
+      .then((res: AxiosResponse<number[]>) => setcolors(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
-  // need to do a load component while the data is being retrieved and sent to the components
   //can fetch the data here for the tracker or in mainApp directly.
   // Loading Page might need some css changes.
   return <>{colors ? <MainApp result={colors} /> : <LoadingPage />}</>;
