@@ -1,7 +1,8 @@
 import React from 'react';
+import { HeaderProps } from '../interfaces';
 
-function Header({ colors }: any) {
-  console.log(colors);
+function Header({ result }: HeaderProps): JSX.Element {
+  console.log(result);
   return (
     <>
       <div>test layout</div>

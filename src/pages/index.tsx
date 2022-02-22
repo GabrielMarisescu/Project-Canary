@@ -1,10 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
+import { MainProps } from '../interfaces';
 
-function index({ colors }: any) {
+//routing here
+
+function index({ result }: MainProps): JSX.Element {
   return (
     <div>
-      <Header colors={colors} />
+      <Header result={result} />
     </div>
   );
 }

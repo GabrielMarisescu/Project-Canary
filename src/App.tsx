@@ -3,9 +3,10 @@ import './App.css';
 import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { serverModel } from './interfaces/index';
 import MainApp from './pages/index';
+import { LoadingPage } from './components/Loading';
 
 function App(): JSX.Element {
-  const [colors, setcolors] = useState<any>();
+  const [colors, setcolors] = useState<number[]>();
 
   //This will fetch the random color pallette
   useEffect(() => {
@@ -19,16 +20,13 @@ function App(): JSX.Element {
 
     axios
       .post<any>(fetchUrl, fetchData, { headers })
-      .then((res: AxiosResponse<any>) => setcolors(res.data));
+      .then((res: AxiosResponse<number[]>) => setcolors(res.data));
   }, []);
 
   // need to do a load component while the data is being retrieved and sent to the components
   //can fetch the data here for the tracker or in mainApp directly.
-  return (
-    <>
-      <MainApp colors={colors} />
-    </>
-  );
+  // Loading Page might need some css changes.
+  return <>{colors ? <MainApp result={colors} /> : <LoadingPage />}</>;
 }
 
 export default App;
