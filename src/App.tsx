@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { serverModel } from './interfaces/index';
-import Header from './components/Header';
+import MainApp from './pages/index';
 
 function App(): JSX.Element {
   const [colors, setcolors] = useState<any>();
@@ -22,12 +22,11 @@ function App(): JSX.Element {
       .then((res: AxiosResponse<any>) => setcolors(res.data));
   }, []);
 
-  console.log(colors);
   // need to do a load component while the data is being retrieved and sent to the components
+  //can fetch the data here for the tracker or in mainApp directly.
   return (
     <>
-      <Header colors={colors} />
-      <div className='text-7xl font-bold underline'>Hello world!</div>
+      <MainApp colors={colors} />
     </>
   );
 }
