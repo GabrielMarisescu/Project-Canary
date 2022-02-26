@@ -6,7 +6,7 @@ import MainApp from './pages/index';
 import { LoadingPage } from './components/Loading';
 
 function App(): JSX.Element {
-  const [colors, setcolors] = useState<number[]>();
+  const [colors, setColors] = useState<number[]>();
 
   //This will fetch the random color pallette
   useEffect(() => {
@@ -22,7 +22,7 @@ function App(): JSX.Element {
       .post<AxiosResponse<string, serverModel>, any>(fetchUrl, fetchData, {
         headers,
       })
-      .then((res: AxiosResponse<number[]>) => setcolors(res.data))
+      .then((res: AxiosResponse<number[]>) => setColors(res.data))
       .catch((err) => console.log(err));
   }, []);
 
