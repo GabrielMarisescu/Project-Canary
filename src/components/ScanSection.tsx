@@ -7,13 +7,20 @@ function ScanSection() {
 
   //This will fetch the random color pallette
   useEffect(() => {
+    const virusTotalApiKey = process.env.virustotal;
     const virusTotalURL = {
       url: 'https://www.youtube.com/',
     };
-    const virusTotalApiKey = process.env.virustotal;
+    const headers = {
+      'Content-Type': 'text/plain',
+      'x-apikey': `${virusTotalApiKey}`,
+    };
     axios
-      // eslint-disable-next-line no-template-curly-in-string
-      .get('https://www.virustotal.com/api/v3/URL/https://www.youtube.com/')
+      .post(
+        'https://www.virustotal.com/api/v3/urls/',
+        { headers },
+        virusTotalURL
+      )
       .then((data) => setResult(data));
   }, []);
   console.log(result);
