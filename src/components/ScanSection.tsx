@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 function ScanSection() {
@@ -7,27 +6,32 @@ function ScanSection() {
 
   //This will fetch the random color pallette
   useEffect(() => {
-    const virusTotalApiKey = process.env.virustotal;
+    const virusTotalApiKey = process.env.REACT_APP_API_KEY;
     const virusTotalURL = {
       url: 'https://www.youtube.com/',
     };
-    const headers = {
-      'Content-Type': 'text/plain',
-      'x-apikey': `${virusTotalApiKey}`,
+    const encodedResult = Buffer.from(`${virusTotalURL}`).toString('base64');
+    const options = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'x-apikey': `${virusTotalApiKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        url: `${encodedResult}`,
+      }),
     };
-    axios
-      .post(
-        'https://www.virustotal.com/api/v3/urls/',
-        { headers },
-        virusTotalURL
-      )
-      .then((data) => setResult(data));
+
+    fetch('https://www.virustotal.com/api/v3/urls', options)
+      .then((response) => response.json())
+      .then((response) => setResult(response))
+      .catch((err) => console.error(err));
   }, []);
   console.log(result);
   return (
     <>
       <div>test</div>
-      {result}
     </>
   );
 }
