@@ -4,14 +4,10 @@ function ScanSection() {
   const [result, setResult] = useState<any>();
   const [url, setUrl] = useState<any>();
 
-  //This will fetch the random color pallette
   useEffect(() => {
     const virusTotalApiKey = process.env.REACT_APP_API_KEY;
-    const virusTotalURL = {
-      url: 'https://www.youtube.com/',
-    };
-    const encodedResult = Buffer.from(`${virusTotalURL}`).toString('base64');
-    const options = {
+    const virusTotalURL = 'https://www.twitch.tv/lec';
+    const optionsEncoder = {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -19,16 +15,35 @@ function ScanSection() {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
-        url: `${encodedResult}`,
+        url: `${virusTotalURL}`,
       }),
     };
+    const optionsAnalysis = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'x-apikey': `${virusTotalApiKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
 
-    fetch('https://www.virustotal.com/api/v3/urls', options)
+    fetch('https://www.virustotal.com/api/v3/urls', optionsEncoder)
       .then((response) => response.json())
-      .then((response) => setResult(response))
+      .then((response) => setUrl(response))
       .catch((err) => console.error(err));
+
+    if (url) {
+      fetch(
+        'https://www.virustotal.com/api/v3/urls/' + url?.data?.id,
+        optionsAnalysis
+      )
+        .then((response) => response.json())
+        .then((response) => setResult(response))
+        .catch((err) => console.error(err));
+    }
   }, []);
-  console.log(result);
+
+  console.log(url?.data?.id, result);
   return (
     <>
       <div>test</div>
