@@ -2,7 +2,7 @@ export interface serverModel {
   model: string;
 }
 
-export interface HeaderProps {
+export interface ScanSectionProps {
   result: number[] | undefined;
 }
 

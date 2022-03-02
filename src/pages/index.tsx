@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from '../components/Header';
 import { MainProps } from '../interfaces';
 import ScanSection from '../components/ScanSection';
 
@@ -8,8 +7,7 @@ import ScanSection from '../components/ScanSection';
 function index({ result }: MainProps): JSX.Element {
   return (
     <div>
-      <Header result={result} />
-      <ScanSection />
+      <ScanSection result={result} />
     </div>
   );
 }
