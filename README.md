@@ -1,4 +1,4 @@
-## This is a project which will analyze a link and tell you if it's malicious or not, using the virusTotalApi: https://developers.virustotal.com/reference/overview .It will data visualization along with the API http://colormind.io/api-access/ to get a random colors everytime.
+## This is a project which will analyze a link and tell you if it's malicious or not, using the virusTotalApi: https://developers.virustotal.com/reference/overview .It will use data visualization along with the API http://colormind.io/api-access/ to get random colors everytime.
 
 ## To successfully run this project. You need to create an .env file and use your own VirusTotal API key, which you can get for free.
 
