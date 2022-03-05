@@ -11,38 +11,40 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const virusTotalApiKey = process.env.REACT_APP_API_KEY;
   const analysisData = url?.data?.id;
 
-  const optionsEncoder = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'x-apikey': `${virusTotalApiKey}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      url: `${inputURL}`,
-    }),
-  };
-
-  const optionsAnalysis = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'x-apikey': `${virusTotalApiKey}`,
-    },
-  };
-
   const submitData = useCallback((e: { preventDefault: () => void }) => {
     e.preventDefault();
     //  setInputUrl('');
   }, []);
 
-  useEffect(() => {}, [submitData]);
+  useEffect(() => {
+    const optionsEncoder = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'x-apikey': `${virusTotalApiKey}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        url: `${inputURL}`,
+      }),
+    };
 
-  const analyze = () => {
-    fetch('https://www.virustotal.com/api/v3/urls', optionsEncoder)
-      .then((response) => response.json())
-      .then((response) => setUrl(response))
-      .catch((err) => console.error(err));
+    if (inputURL) {
+      fetch('https://www.virustotal.com/api/v3/urls', optionsEncoder)
+        .then((response) => response.json())
+        .then((response) => setUrl(response))
+        .catch((err) => console.error(err));
+    }
+  }, [inputURL, virusTotalApiKey]);
+
+  useEffect(() => {
+    const optionsAnalysis = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'x-apikey': `${virusTotalApiKey}`,
+      },
+    };
 
     fetch(
       'https://www.virustotal.com/api/v3/analyses/' + analysisData,
@@ -51,7 +53,7 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
       .then((response) => response.json())
       .then((response) => setAnalysisResult(response))
       .catch((err) => console.error(err));
-  };
+  }, [analysisData, url, virusTotalApiKey]);
 
   console.log(url?.data?.id, result, analysisResult);
   //bg gradient can be made dynamic thru the colormind api or the colors of the logo
@@ -93,7 +95,23 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
         </form>
       </div>
       <div className='flex justify-center'>
-        {analysisResult ? analysisResult.data.attributes.status : null}
+        {analysisResult
+          ? 'Your Search is ' + analysisResult.data?.attributes?.status
+          : null}
+      </div>
+
+      <div className='flex justify-center'>
+        <div>
+          {analysisResult
+            ? 'Harmless: ' + analysisResult.data?.attributes?.stats?.harmless
+            : null}
+        </div>
+        <div>
+          {analysisResult
+            ? '  Malicious: ' +
+              analysisResult.data?.attributes?.stats?.malicious
+            : null}
+        </div>
       </div>
     </>
   );
