@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScanSectionProps } from '../interfaces';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import logoMain from '../assets/Logogab.png';
@@ -7,55 +7,70 @@ import { Search } from '@mui/icons-material';
 function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<any>();
   const [inputURL, setInputUrl] = useState<string>();
-  const [url, setUrl] = useState<any>();
+  const [canonizedUrl, setCanonizedUrl] = useState<any>();
   const virusTotalApiKey = process.env.REACT_APP_API_KEY;
-  const analysisData = url?.data?.id;
+  const analysisData = canonizedUrl?.data?.id;
 
-  const submitData = useCallback((e: { preventDefault: () => void }) => {
+  const submitData = (e: any) => {
     e.preventDefault();
-    //  setInputUrl('');
-  }, []);
+    getResults();
+  };
 
-  useEffect(() => {
-    const optionsEncoder = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'x-apikey': `${virusTotalApiKey}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        url: `${inputURL}`,
-      }),
-    };
+  const getResults = () => {
+    if (analysisData) {
+      fetch(
+        'https://www.virustotal.com/api/v3/analyses/' + analysisData,
+        optionsAnalysis
+      )
+        .then((response) => response.json())
+        .then((response) => setAnalysisResult(response))
+        .catch((err) => console.error(err));
+    }
+  };
 
+  const getCanonizedUrl = () => {
     if (inputURL) {
       fetch('https://www.virustotal.com/api/v3/urls', optionsEncoder)
         .then((response) => response.json())
-        .then((response) => setUrl(response))
+        .then((response) => setCanonizedUrl(response))
         .catch((err) => console.error(err));
     }
-  }, [inputURL, virusTotalApiKey]);
+  };
+  //Data Payload for the API calls
+  const optionsAnalysis = {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'x-apikey': `${virusTotalApiKey}`,
+    },
+  };
+  const optionsEncoder = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'x-apikey': `${virusTotalApiKey}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      url: `${inputURL}`,
+    }),
+  };
 
+  //Get the Canonized URL  necessary to make the API calls that tells you if an URL is dangerous.
   useEffect(() => {
-    const optionsAnalysis = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'x-apikey': `${virusTotalApiKey}`,
-      },
-    };
+    getCanonizedUrl();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputURL]);
 
-    fetch(
-      'https://www.virustotal.com/api/v3/analyses/' + analysisData,
-      optionsAnalysis
-    )
-      .then((response) => response.json())
-      .then((response) => setAnalysisResult(response))
-      .catch((err) => console.error(err));
-  }, [analysisData, url, virusTotalApiKey]);
+  //If the data is  not completed yet  NEEDS TO BE DONE
 
-  console.log(url?.data?.id, result, analysisResult);
+  // if (analysisResult?.data?.attributes?.status === 'queued') {
+  // setInterval(() => {
+  //  getCanonizedUrl();
+  // }, 1000);
+  // }
+
+  console.log(canonizedUrl?.data?.id, result, analysisResult);
   //bg gradient can be made dynamic thru the colormind api or the colors of the logo
   return (
     <>
@@ -90,7 +105,7 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
           <Search
             type='submit'
             onClick={submitData}
-            className=' ml-2 mt-2 active:border-indigo-300'
+            className=' ml-2 mt-2 active:border-indigo-300 cursor-pointer'
           />
         </form>
       </div>
