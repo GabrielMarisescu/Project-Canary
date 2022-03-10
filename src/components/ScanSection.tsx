@@ -3,6 +3,7 @@ import { AnalysisResult, CanonizedUrl, ScanSectionProps } from '../interfaces';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import logoMain from '../assets/Logogab.png';
 import { Search } from '@mui/icons-material';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
@@ -12,11 +13,11 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const analysisData: string = canonizedUrl?.data?.id!;
   const callStatus: string = analysisResult?.data?.attributes?.status!;
 
-  const submitData = async (e: any) => {
+  const submitData = (e: any) => {
+    console.log(e);
     e.preventDefault();
     getResults();
   };
-  //Data Payload for the API calls
 
   const getResults = useCallback(() => {
     const optionsAnalysis = {
@@ -90,6 +91,10 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
   //bg gradient can be made dynamic thru the colormind api or the colors of the logo
   return (
     <>
+      {analysisResult?.data?.attributes?.status === 'queued' ? (
+        <LinearProgress />
+      ) : null}
+
       <Paper variant='elevation' className='mb-5'>
         <div className='flex mt-10 justify-center  bg-gray-50'>
           <img
@@ -124,11 +129,6 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
             className=' ml-2 mt-2 active:border-indigo-300 cursor-pointer'
           />
         </form>
-      </div>
-      <div className='flex justify-center'>
-        {analysisResult
-          ? 'Your Search is ' + analysisResult.data?.attributes?.status
-          : null}
       </div>
 
       <div className='flex justify-center'>
