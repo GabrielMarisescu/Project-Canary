@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { ScanSectionProps } from '../interfaces';
+import { AnalysisResult, CanonizedUrl, ScanSectionProps } from '../interfaces';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import logoMain from '../assets/Logogab.png';
 import { Search } from '@mui/icons-material';
 
 function ScanSection({ result }: ScanSectionProps): JSX.Element {
-  const [analysisResult, setAnalysisResult] = useState<any>();
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
   const [inputURL, setInputUrl] = useState<string>();
-  const [canonizedUrl, setCanonizedUrl] = useState<any>();
+  const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
   const virusTotalApiKey = process.env.REACT_APP_API_KEY;
-  const analysisData = canonizedUrl?.data?.id;
+  const analysisData: string = canonizedUrl?.data?.id!;
+  const callStatus: string = analysisResult?.data?.attributes?.status!;
 
   const submitData = (e: any) => {
     e.preventDefault();
@@ -62,13 +63,22 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputURL]);
 
-  //If the data is  not completed yet  NEEDS TO BE DONE
+  // Time for the
+  useEffect(() => {
+    let intervalID: NodeJS.Timer;
+    if (callStatus === 'queued') {
+      intervalID = setInterval(() => {
+        getResults();
+      }, 4000);
+    }
 
-  // if (analysisResult?.data?.attributes?.status === 'queued') {
-  // setInterval(() => {
-  //  getCanonizedUrl();
-  // }, 1000);
-  // }
+    return () => {
+      if (intervalID) {
+        clearInterval(intervalID);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callStatus]);
 
   console.log(canonizedUrl?.data?.id, result, analysisResult);
   //bg gradient can be made dynamic thru the colormind api or the colors of the logo
