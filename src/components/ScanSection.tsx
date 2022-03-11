@@ -14,30 +14,11 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const callStatus: string = analysisResult?.data?.attributes?.status!;
 
   const submitData = (e: any) => {
-    console.log(e);
     e.preventDefault();
     getResults();
   };
 
-  const getResults = useCallback(() => {
-    const optionsAnalysis = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'x-apikey': `${virusTotalApiKey}`,
-      },
-    };
-    if (analysisData) {
-      fetch(
-        'https://www.virustotal.com/api/v3/analyses/' + analysisData,
-        optionsAnalysis
-      )
-        .then((response) => response.json())
-        .then((response) => setAnalysisResult(response))
-        .catch((err) => console.error(err));
-    }
-  }, [analysisData, virusTotalApiKey]);
-
+  //Get the Canonized URL  necessary to make the API calls that tells you if an URL is dangerous.
   const getCanonizedUrl = useCallback(() => {
     const optionsEncoder = {
       method: 'POST',
@@ -58,17 +39,35 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
     }
   }, [inputURL, virusTotalApiKey]);
 
-  //Get the Canonized URL  necessary to make the API calls that tells you if an URL is dangerous.
+  // Takes the CanonizedURL and makes a call to get the info about the URL
+  const getResults = useCallback(() => {
+    const optionsAnalysis = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'x-apikey': `${virusTotalApiKey}`,
+      },
+    };
+    if (analysisData) {
+      fetch(
+        'https://www.virustotal.com/api/v3/analyses/' + analysisData,
+        optionsAnalysis
+      )
+        .then((response) => response.json())
+        .then((response) => setAnalysisResult(response))
+        .catch((err) => console.error(err));
+    }
+  }, [analysisData, virusTotalApiKey]);
+
   useEffect(() => {
     getCanonizedUrl();
   }, [getCanonizedUrl, inputURL]);
 
-  // Time for the
+  // If the result is "queued", it will redo the api call to get the actual result. Enter key listener
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: any) => {
       if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-        console.log('Enter key was pressed. Run your function.');
         event.preventDefault();
         getResults();
       }
@@ -87,7 +86,7 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
     };
   }, [callStatus, getResults]);
 
-  console.log(canonizedUrl?.data?.id, result, analysisResult);
+  console.log();
   //bg gradient can be made dynamic thru the colormind api or the colors of the logo
   return (
     <>
