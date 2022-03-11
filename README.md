@@ -6,7 +6,7 @@
 
 ##### git clone https://github.com/GabrielMarisescu/Colorful-Analyser
 
-##### cd ColorfulAnalyser
+##### cd Colorful-Analyser
 
 ##### npm i
 
