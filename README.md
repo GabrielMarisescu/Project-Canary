@@ -1,25 +1,48 @@
-## This is a project which will analyze a link and tell you if it's malicious or not, using the virusTotalApi: https://developers.virustotal.com/reference/overview .It will use data visualization along with the API http://colormind.io/api-access/ to get random colors everytime.
+# Colorful Analyser
 
-## To successfully run this project. You need to create an .env file and use your own VirusTotal API key, which you can get for free.
+Colorful Analyser is a virus scanning website for links.
+* Reports back to you if a link is malicious
+* Actively maintained by developers
+* Feel free to make pull requests or Issues
+* The project uses the [VirusTotal API](https://developers.virustotal.com/reference/overview) for analysis
+* The project also uses [Colormind API](http://colormind.io/api-access) for data visualization purposes
+* This project is initialised with [create-react-app](https://github.com/facebook/create-react-app) with typescript
 
-### How to Install the project using GIT :
 
-##### git clone https://github.com/GabrielMarisescu/Colorful-Analyser
+## Installation
+The steps below will allow you to run this website locally
+1. Clone the repo 
+   1. > git clone https://github.com/GabrielMarisescu/Colorful-Analyser
+   2. > cd Colorful-Analyser
+2. Get your own VirusTotal API key
+   1. Go to the [website](https://www.virustotal.com/)
+   2. Sign up / Sign in with your account
+   3. On home page, click your user avatar and select "API key"
+   4. Copy the API Key
+3. Add the API Key to your local environmental variable
+   1. Create a file called .env in `Colorful-Analyser` directory
+   2. Add this line and replace xxx with your API key `REACT_APP_API_KEY=xxx`
+   3. (note that no quotations are needed)
+4. Install dependencies and run the website locally!
+   1. > npm install
+   2. > npm start
+5. Enjoy and feel free to report any [bugs](https://github.com/GabrielMarisescu/Colorful-Analyser)
 
-##### cd Colorful-Analyser
 
-##### npm i
+## Contributing
+Everyone is welcomed to contribute to our existing code base via pull requests, 
+find an existing issue and help us fix it.  
 
-##### npm start
+If you wish to work on additional features, we would strongly recommend you to
+create an issue with the appropriate tags and assign yourself to the issue or 
+comment appropriately on the issue that you are working on it.
 
-### Current File Structure :
+1. Fork the repo
+2. Follow steps on [Installation](#installation)
 
-##### /src/components , reusable components
-
-##### /src/assets , images and such
-
-##### /src/interfaces ,TS Interfaces
-
-##### /src/utils , utility functions and data
-
-##### /src/pages ,Main pages(Routes)
+### File structure:
+* **src/components**, Reusable components  
+* **src/assets**, Resources such as images
+* **src/interfaces**, Typescript Interfaces
+* **src/utils**, Utility functions
+* **src/pages**, Pages (routes)
