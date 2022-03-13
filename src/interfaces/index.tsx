@@ -9,6 +9,7 @@ export interface ScanSectionProps {
 export interface MainProps {
   result: number[] | undefined;
 }
+
 export interface CanonizedUrl {
   data: {
     id: string;
