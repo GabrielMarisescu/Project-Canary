@@ -14,6 +14,7 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const callStatus: string = analysisResult?.data?.attributes?.status!;
 
   const submitData = (e: any) => {
+    // todo: make it obvious for the user that the button is not clickable
     e.preventDefault(); // prevents user from clicking the search button when already searching
     getResults(analysisData).then(res => setAnalysisResult(res));
   };
