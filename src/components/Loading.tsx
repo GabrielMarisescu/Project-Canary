@@ -1,10 +1,10 @@
-import React from 'react';
-import useTheme from '@material-ui/core/styles/useTheme';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { CircularProgress } from '@material-ui/core';
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { css } from "@emotion/react";
+import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
+import { CircularProgress } from "@material-ui/core";
+import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import React from "react";
 
 export const LoadingPage = (): EmotionJSX.Element => {
   const styles = {
@@ -42,22 +42,21 @@ export const LoadingPage = (): EmotionJSX.Element => {
           color: #ff1493;
         }
       }
-      animation: MuiCircularProgress-keyframes-circular-rotate 1.4s linear
-          infinite,
-        changeColor 2s linear infinite;
+      animation: MuiCircularProgress-keyframes-circular-rotate 1.4s linear infinite,
+      changeColor 2s linear infinite;
     `,
   };
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <div css={styles.root}>
+    <div css={ styles.root }>
       <CircularProgress
-        thickness={5}
-        size={isMobile ? 75 : 100}
+        thickness={ 5 }
+        size={ isMobile ? 75 : 100 }
         disableShrink
-        css={styles.circularProgress}
+        css={ styles.circularProgress }
       />
     </div>
   );

@@ -9,6 +9,7 @@ export interface ScanSectionProps {
 export interface MainProps {
   result: number[] | undefined;
 }
+
 export interface CanonizedUrl {
   data: {
     id: string;
@@ -34,7 +35,18 @@ export interface AnalysisResult {
         undetected: number;
         timeout: number;
       };
-      results: {};
+      results: {
+        category: string;
+        result: string;
+        method: string;
+        engine_name: string;
+      }[];
+    };
+    type: string
+    id: string
+    links: {
+      item: string;
+      self: string;
     };
   };
 }
