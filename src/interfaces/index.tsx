@@ -5,6 +5,9 @@ export interface serverModel {
 export interface ScanSectionProps {
   result: number[] | undefined;
 }
+export interface FooterProps {
+  result: number[] | undefined;
+}
 
 export interface MainProps {
   result: number[] | undefined;
@@ -42,8 +45,8 @@ export interface AnalysisResult {
         engine_name: string;
       }[];
     };
-    type: string
-    id: string
+    type: string;
+    id: string;
     links: {
       item: string;
       self: string;
