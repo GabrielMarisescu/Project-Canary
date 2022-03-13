@@ -1,67 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnalysisResult, CanonizedUrl, ScanSectionProps } from '../interfaces';
 import { Paper, TextField, Typography } from '@material-ui/core';
 import logoMain from '../assets/Logogab.png';
 import { Search } from '@mui/icons-material';
+import { getCanonizedUrl, getResults } from "../utils/virustotal";
 import LinearProgress from '@mui/material/LinearProgress';
 
 function ScanSection({ result }: ScanSectionProps): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
-  const [inputURL, setInputUrl] = useState<string>();
+  const [inputURL, setInputUrl] = useState<string>("");
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
-  const virusTotalApiKey = process.env.REACT_APP_API_KEY;
   const analysisData: string = canonizedUrl?.data?.id!;
   const callStatus: string = analysisResult?.data?.attributes?.status!;
 
   const submitData = (e: any) => {
-    e.preventDefault();
-    getResults();
+    e.preventDefault(); // prevents user from clicking the search button when already searching
+    getResults(analysisData).then(res => setAnalysisResult(res));
   };
 
-  //Get the Canonized URL  necessary to make the API calls that tells you if an URL is dangerous.
-  const getCanonizedUrl = useCallback(() => {
-    const optionsEncoder = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'x-apikey': `${virusTotalApiKey}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        url: `${inputURL}`,
-      }),
-    };
-    if (inputURL) {
-      fetch('https://www.virustotal.com/api/v3/urls', optionsEncoder)
-        .then((response) => response.json())
-        .then((response) => setCanonizedUrl(response))
-        .catch((err) => console.error(err));
-    }
-  }, [inputURL, virusTotalApiKey]);
-
-  // Takes the CanonizedURL and makes a call to get the info about the URL
-  const getResults = useCallback(() => {
-    const optionsAnalysis = {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'x-apikey': `${virusTotalApiKey}`,
-      },
-    };
-    if (analysisData) {
-      fetch(
-        'https://www.virustotal.com/api/v3/analyses/' + analysisData,
-        optionsAnalysis
-      )
-        .then((response) => response.json())
-        .then((response) => setAnalysisResult(response))
-        .catch((err) => console.error(err));
-    }
-  }, [analysisData, virusTotalApiKey]);
-
   useEffect(() => {
-    getCanonizedUrl();
-  }, [getCanonizedUrl, inputURL]);
+    getCanonizedUrl(inputURL).then(res => setCanonizedUrl(res))
+  }, [inputURL]);
 
   // If the result is "queued", it will redo the api call to get the actual result. Enter key listener
   useEffect(() => {
@@ -69,13 +28,13 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
     const listener = (event: any) => {
       if (event.code === 'Enter' || event.code === 'NumpadEnter') {
         event.preventDefault();
-        getResults();
+        getResults(analysisData).then(res => setAnalysisResult(res));
       }
     };
     document.addEventListener('keydown', listener);
     if (callStatus === 'queued') {
       intervalID = setInterval(() => {
-        getResults();
+        getResults(analysisData).then(res => setAnalysisResult(res));
       }, 4000);
     }
     return () => {
@@ -84,10 +43,9 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
         clearInterval(intervalID);
       }
     };
-  }, [callStatus, getResults]);
+  }, [analysisData, callStatus]);
 
-  console.log();
-  //bg gradient can be made dynamic thru the colormind api or the colors of the logo
+  //bg gradient can be made dynamic through the color-mind api or the colors of the logo
   return (
     <>
       {analysisResult?.data?.attributes?.status === 'queued' ? (
