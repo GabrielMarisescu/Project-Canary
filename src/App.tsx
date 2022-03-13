@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import axios, { AxiosRequestHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosRequestHeaders, AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { LoadingPage } from "./components/Loading";
 import { serverModel } from "./interfaces";
-import MainApp from './pages/index';
-import { LoadingPage } from './components/Loading';
+import MainApp from "./pages/index";
 
 function App(): JSX.Element {
-  const [colors, setColors] = useState<number[]>();
+  const [ colors, setColors ] = useState<number[]>();
 
   //This will fetch the random color palette
   useEffect(() => {
-    const fetchUrl: string = 'http://colormind.io/api/';
+    const fetchUrl: string = "http://colormind.io/api/";
     const fetchData: serverModel = {
-      model: 'ui',
+      model: "ui",
     };
     const headers: AxiosRequestHeaders = {
-      'Content-Type': 'text/plain',
+      "Content-Type": "text/plain",
     };
 
     axios
@@ -28,7 +28,7 @@ function App(): JSX.Element {
 
   //can fetch the data here for the tracker or in mainApp directly.
   // Loading Page might need some css changes.
-  return <>{colors ? <MainApp result={colors} /> : <LoadingPage />}</>;
+  return <>{ colors ? <MainApp result={ colors }/> : <LoadingPage/> }</>;
 }
 
 export default App;
