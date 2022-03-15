@@ -10,8 +10,8 @@ function index({ result }: MainProps): JSX.Element {
   return (
     <>
       <ScanSection result={result} />
-      <Footer result={result} />
       <MusicPlayer result={result} />
+      <Footer result={result} />
     </>
   );
 }

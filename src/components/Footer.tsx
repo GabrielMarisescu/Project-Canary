@@ -5,7 +5,7 @@ import { FooterProps } from '../interfaces';
 function Footer({ result }: FooterProps) {
   console.log(result);
   return (
-    <footer className='bottom-0 fixed w-screen h-1/6 flex-wrap flex justify-around antialiased  bg-gray-100  '>
+    <footer className='w-screen h-1/6 flex-wrap flex justify-around antialiased  bg-gray-100  mt-10 font-serif'>
       <div className=' hidden mt-5 sm:inline-block'>
         <Typography variant='body1' className=''>
           Colorful Analyzer
