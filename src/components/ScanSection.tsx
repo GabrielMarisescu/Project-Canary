@@ -1,4 +1,4 @@
-import { Paper, TextField, Typography } from '@material-ui/core';
+import { Paper, TextField } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
 import LinearProgress from '@mui/material/LinearProgress';
 import React, { useEffect, useState } from 'react';
@@ -64,12 +64,9 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
       </Paper>
 
       <div className=' mb-2 ml-4 mr-4'>
-        <Typography
-          variant='h5'
-          className='flex justify-center  md:text-lg antialiased font-normal text-center'
-        >
+        <p className='flex justify-center antialiased font-normal text-center prose-xl md:prose-2xl'>
           Analyze suspicious URLs to detect malware
-        </Typography>
+        </p>
       </div>
       <div className='flex justify-center ml-4 mr-4'>
         <form className='mt-20 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
