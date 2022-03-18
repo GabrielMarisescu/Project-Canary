@@ -12,6 +12,9 @@ export interface FooterProps {
 export interface MusicPlayerProps {
   result: number[] | undefined;
 }
+//export interface MusicPlayerProps {
+// result: [number[] | undefined];
+//}
 export interface MainProps {
   result: number[] | undefined;
 }
