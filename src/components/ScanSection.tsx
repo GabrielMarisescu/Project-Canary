@@ -4,12 +4,16 @@ import LinearProgress from '@mui/material/LinearProgress';
 import React, { useEffect, useState } from 'react';
 import logoMain from '../assets/Logogab.png';
 import { AnalysisResult, CanonizedUrl, ScanSectionProps } from '../interfaces';
+import { rgbToHex } from '../utils/utils';
 import { getCanonizedUrl, getResults } from '../utils/virustotal';
 
-function ScanSection({ result }: ScanSectionProps): JSX.Element {
+function ScanSection({ result }: any): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
   const [inputURL, setInputUrl] = useState<string>('');
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
+  const [firstColor, setFirstColor] = useState('');
+  const [secondColor, setSecondColor] = useState('');
+  const [thirdColor, setThirdColor] = useState('');
   const analysisData: string = canonizedUrl?.data?.id!;
   const callStatus: string = analysisResult?.data?.attributes?.status!;
 
@@ -22,6 +26,12 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
   useEffect(() => {
     getCanonizedUrl(inputURL).then((res) => setCanonizedUrl(res));
   }, [inputURL]);
+
+  useEffect(() => {
+    setFirstColor(rgbToHex(result?.result[1]));
+    setSecondColor(rgbToHex(result?.result[3]));
+    setThirdColor(rgbToHex(result?.result[4]));
+  }, [result]);
 
   // If the result is "queued", it will redo the api call to get the actual result. Enter key listener
   useEffect(() => {
@@ -64,9 +74,34 @@ function ScanSection({ result }: ScanSectionProps): JSX.Element {
       </Paper>
 
       <div className=' mb-2 ml-4 mr-4'>
-        <p className='flex justify-center antialiased font-normal text-center prose-xl md:prose-2xl'>
-          Analyze suspicious URLs to detect malware
-        </p>
+        <div className='flex justify-center antialiased font-normal text-center prose-xl md:prose-2xl'>
+          <p
+            style={{
+              color: `${firstColor}`,
+              marginTop: 0,
+            }}
+          >
+            Analyze suspicious
+          </p>
+          &nbsp;
+          <p
+            style={{
+              color: `${secondColor}`,
+              marginTop: 0,
+            }}
+          >
+            URLs to
+          </p>
+          &nbsp;
+          <p
+            style={{
+              color: `${thirdColor}`,
+              marginTop: 0,
+            }}
+          >
+            detect malware
+          </p>
+        </div>
       </div>
       <div className='flex justify-center ml-4 mr-4'>
         <form className='mt-20 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>

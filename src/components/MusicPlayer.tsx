@@ -5,17 +5,15 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import { rgbToHex } from '../utils/utils';
 
 function MusicPlayer({ result }: any) {
-  const [color1, setColor1] = useState('');
-  const [color2, setColor2] = useState('');
+  const [firstColor, setFirstColor] = useState('');
+  const [secondColor, setSecondColor] = useState('');
   const src = [
     'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3',
   ];
   useEffect(() => {
-    setColor1(rgbToHex(result?.result[1]));
-    setColor2(rgbToHex(result?.result[4]));
+    setFirstColor(rgbToHex(result?.result[1]));
+    setSecondColor(rgbToHex(result?.result[4]));
   }, [result]);
-
-  console.log(result, color1, color2);
 
   return (
     <>
@@ -25,7 +23,7 @@ function MusicPlayer({ result }: any) {
         <div className='prose-md md:prose-lg flex'>
           <p
             style={{
-              color: `${color1}`,
+              color: `${firstColor}`,
               marginTop: 0,
             }}
           >
@@ -33,13 +31,12 @@ function MusicPlayer({ result }: any) {
           </p>
           <p
             style={{
-              color: `${color2}`,
+              color: `${secondColor}`,
               marginTop: 0,
             }}
           >
             ME TUNES :D
           </p>
-          &nbsp;
         </div>
         <MusicNoteIcon className='ml-5 mr-5 mt-1' />
         <MusicNoteIcon className='mt-1' />
