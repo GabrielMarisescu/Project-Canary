@@ -1,9 +1,7 @@
 import { Link, Typography } from '@mui/material';
 import React from 'react';
-import { FooterProps } from '../interfaces';
 
-function Footer({ result }: FooterProps) {
-  console.log(result);
+function Footer() {
   return (
     <footer className='w-screen h-1/6 flex-wrap flex justify-around antialiased  bg-gray-100  mt-10 font-serif'>
       <div className=' hidden mt-5 sm:inline-block'>
