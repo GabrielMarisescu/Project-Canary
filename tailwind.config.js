@@ -13,6 +13,15 @@ module.exports = {
       serif: ['Merriweather', 'serif'],
     },
     extend: {
+      flexGrow: {
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
+      },
+      minWidth: {
+        '1/2': '50%',
+      },
       spacing: {
         128: '32rem',
         144: '36rem',
