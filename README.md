@@ -1,6 +1,6 @@
-# Colorful Analyser
+# Project Canary
 
-Colorful Analyser is a virus scanning website for links.
+Project Canary is a virus scanning website for links.
 
 * Reports back to you if a link is malicious
 * Actively maintained by developers
@@ -8,8 +8,6 @@ Colorful Analyser is a virus scanning website for links.
 * The project uses
   the [VirusTotal API](https://developers.virustotal.com/reference/overview) for
   analysis
-* The project also uses [Colormind API](http://colormind.io/api-access) for data
-  visualization purposes
 * This project is initialised
   with [create-react-app](https://github.com/facebook/create-react-app) with
   typescript
@@ -19,8 +17,8 @@ Colorful Analyser is a virus scanning website for links.
 The steps below will allow you to run this website locally
 
 1. Clone the repo
-    1. `git clone https://github.com/GabrielMarisescu/Colorful-Analyser`
-    2. `cd Colorful-Analyser`
+    1. `git clone https://github.com/GabrielMarisescu/Project-Canary`
+    2. `cd Project-Canary`
 2. Get your own VirusTotal API key
     1. Go to the Virus total [website](https://www.virustotal.com/)
     2. Sign up / Sign in with your account
