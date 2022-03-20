@@ -54,7 +54,7 @@ function ScanSection(): JSX.Element {
       ) : null}
 
       <Paper variant='elevation' className='mb-5'>
-        <div className='flex mt-10 justify-center  bg-gray-50'>
+        <div className='flex justify-center bg-gray-100'>
           <img
             src={logoMain}
             alt='main logo'

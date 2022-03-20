@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import MainApp from "../pages/index";
-import gabe from "../assets/gabe-square.png"
+import gabe from "../assets/gabe-orange.png"
 
 function Nav() {
   return(

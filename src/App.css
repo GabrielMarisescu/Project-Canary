@@ -13,7 +13,7 @@ nav {
 #headshot {
   border-radius: 50%;
   /* border: 1px solid orange; */
-  height: 70px;
+  height: 65px;
   margin-right: 1.5rem;
 }
 
@@ -24,7 +24,7 @@ nav {
   /* border: 2px solid blue; */
 }
 
-#home-link p:hover {
+#home-link:hover {
   color: #ffcc00;
   -webkit-transition: .5s;
 }
