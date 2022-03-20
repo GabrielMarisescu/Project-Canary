@@ -25,14 +25,14 @@ The steps below will allow you to run this website locally
     3. On home page, click your user avatar and select "API key"
     4. Copy the API Key
 3. Add the API Key to your local environmental variable
-    1. Create a file called .env in `Colorful-Analyser` directory
+    1. Create a file called .env in `Project-Canary` directory
     2. Add this line and replace xxx with your API key `REACT_APP_API_KEY=xxx` (
        no quotations marks are needed)
 4. Install dependencies and run the website locally!
     1. `npm install`
     2. `npm start`
 5. Enjoy and feel free to report
-   any [bugs](https://github.com/GabrielMarisescu/Colorful-Analyser)
+   any [bugs](https://github.com/GabrielMarisescu/Project-Canary)
 
 ## Contributing
 
