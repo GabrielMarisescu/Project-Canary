@@ -29,17 +29,17 @@ nav {
   -webkit-transition: .5s;
 }
 
-#links {
+.links {
   display: flex;
   align-items: center;
   /* border: 3px solid green; */
 }
 
-#links a {
+.links a {
   margin-right: 4.3rem;
 }
 
-#links a:hover {
+.links a:hover {
   color: #ffcc00;
   -webkit-transition: .5s;
 }

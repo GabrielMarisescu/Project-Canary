@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import MainApp from "../pages/index";
-import gabe from "../assets/gabe-orange.png"
+import gabe from "../assets/gabe-orange.png";
+import hamburger from "../assets/menu.png";
 
 function Nav() {
   return(
@@ -11,7 +12,7 @@ function Nav() {
           <p>gabriel marisescu</p>
         </a>
 
-        <div id="links">
+        <div className="links">
           <a>About</a>
           <a>Projects</a>
           <a>Contact</a>
