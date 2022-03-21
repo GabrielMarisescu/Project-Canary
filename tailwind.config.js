@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     screens: {
       sm: '480px',
+      tablet: '640px',
       md: '768px',
       lg: '976px',
       xl: '1440px',
@@ -13,6 +14,11 @@ module.exports = {
       serif: ['Merriweather', 'serif'],
     },
     extend: {
+      rotate: {
+        30: '30deg',
+        60: '60deg',
+        75: '75deg',
+      },
       flexGrow: {
         2: 2,
         3: 3,
