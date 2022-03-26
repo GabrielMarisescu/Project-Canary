@@ -1,10 +1,10 @@
-import { Paper, TextField } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
 import LinearProgress from '@mui/material/LinearProgress';
 import React, { useEffect, useState } from 'react';
-import logoMain from '../assets/Logogab.png';
 import { AnalysisResult, CanonizedUrl } from '../interfaces';
 import { getCanonizedUrl, getResults } from '../utils/virustotal';
+import Header from './Header';
 
 function ScanSection(): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
@@ -53,23 +53,14 @@ function ScanSection(): JSX.Element {
         <LinearProgress />
       ) : null}
 
-      <Paper variant='elevation' className='mb-5'>
-        <div className='flex mt-10 justify-center  bg-gray-50'>
-          <img
-            src={logoMain}
-            alt='main logo'
-            className='w-28 md:w-40 mb-1 mt-5'
-          />
-        </div>
-      </Paper>
+      <Header />
 
-      <div className=' mb-2 ml-4 mr-4'>
-        <div className='flex justify-center antialiased font-normal text-center prose-xl md:prose-2xl'>
-          <p>test</p>
-        </div>
+      <div className='mb-5 flex mt-10 justify-between  bg-slate-300 h-96'>
+        <div>Analyze your links</div>
+        <div>Analyze your links</div>
       </div>
       <div className='flex justify-center ml-4 mr-4'>
-        <form className='mt-20 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
+        <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
           <TextField
             autoComplete='off'
             type='text'
