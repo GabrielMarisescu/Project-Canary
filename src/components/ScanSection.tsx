@@ -46,7 +46,6 @@ function ScanSection(): JSX.Element {
     };
   }, [analysisData, callStatus]);
 
-  //bg gradient can be made dynamic through the color-mind api or the colors of the logo
   return (
     <>
       {analysisResult?.data?.attributes?.status === 'queued' ? (
@@ -55,9 +54,19 @@ function ScanSection(): JSX.Element {
 
       <Header />
 
-      <div className='mb-5 flex mt-10 justify-between  bg-slate-300 h-96'>
-        <div>Analyze your links</div>
-        <div>Analyze your links</div>
+      <div className='mb-5 flex mt-10   bg-indigo-100 h-96  flex-wrap '>
+        <div className='prose-xl flex justify-center flex-grow-5 m-auto '>
+          Analyze suspicious domains, IPs and URLs to detect malware.
+        </div>
+        <div className=' flex self-center flex-grow-2 justify-center m-auto'>
+          <img
+            className='w-96 h-48'
+            alt='virusTotal Api'
+            src={
+              'https://upload.wikimedia.org/wikipedia/commons/b/b7/VirusTotal_logo.svg'
+            }
+          />
+        </div>
       </div>
       <div className='flex justify-center ml-4 mr-4'>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>

@@ -3,21 +3,16 @@ import React from 'react';
 function Footer() {
   return (
     <div className='overflow-hidden'>
-      <footer className='flex w-screen h-52  antialiased  bg-black text-white font-serif mt-5 '>
-        <div className=' ml-20 flex-grow-5'>
-          <div>Gabriel Marisescu </div>
-          <div>Description </div>
+      <footer className='flex w-screen h-36  antialiased   font-serif mt-5 bg-indigo-100'>
+        <div className=' ml-20 flex-grow-5 flex justify-center'>
+          <div>Github</div>
+          <div>LinkedIn </div>
         </div>
-
-        <div className=' flex-grow-2'>right</div>
       </footer>
-      <div className='bg-black flex'>
+      <div className=' flex'>
         <hr className='border-stone-400 border-t-1  w-4/5  m-auto ' />
       </div>
-
-      <p className='prose-xl text-white flex justify-center bg-black'>
-        Made by ecc
-      </p>
+      <p className='prose-xl  flex justify-center'>Made with React</p>
     </div>
   );
 }

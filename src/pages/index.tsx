@@ -6,7 +6,7 @@ import ScanSection from '../components/ScanSection';
 //routing here
 
 function index(): JSX.Element {
-  console.log('Hello :D. Have a nice day.');
+  console.log('Hello :D, remember to smile :)');
   return (
     <>
       <ScanSection />
