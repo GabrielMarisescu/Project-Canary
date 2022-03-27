@@ -5,7 +5,7 @@ import mainProfile from '../assets/Canary.png';
 function Header() {
   return (
     <>
-      <nav className=' flex justify-center h-24 text-lg text-zinc-500 font-bold '>
+      <nav className=' flex justify-center h-24 text-lg text-zinc-800 prose-p:font-bold '>
         <div className='flex mt-10 ml-5'>
           <Avatar
             alt='Canary Logo'

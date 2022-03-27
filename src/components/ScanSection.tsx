@@ -1,35 +1,42 @@
 import { TextField } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
 import LinearProgress from '@mui/material/LinearProgress';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnalysisResult, CanonizedUrl } from '../interfaces';
 import { getCanonizedUrl, getResults } from '../utils/virustotal';
 import Header from './Header';
 
 function ScanSection(): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
-  const [inputURL, setInputUrl] = useState<string>('');
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
   const analysisData: string = canonizedUrl?.data?.id!;
   const callStatus: string = analysisResult?.data?.attributes?.status!;
+  const inputRef = useRef<any>(null);
 
   const submitData = (e: any) => {
     // todo: make it obvious for the user that the button is not clickable
     e.preventDefault(); // prevents user from clicking the search button when already searching
-    getResults(analysisData).then((res) => setAnalysisResult(res));
+    //Using the Ref element to get the value for the canonized Url.
+    getCanonizedUrl(inputRef.current?.value).then((res) =>
+      setCanonizedUrl(res)
+    );
   };
 
   useEffect(() => {
-    getCanonizedUrl(inputURL).then((res) => setCanonizedUrl(res));
-  }, [inputURL]);
-
+    if (canonizedUrl) {
+      getResults(analysisData).then((res) => setAnalysisResult(res));
+      console.log('test', canonizedUrl);
+    }
+  }, [analysisData, canonizedUrl]);
   // If the result is "queued", it will redo the api call to get the actual result. Enter key listener
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: any) => {
       if (event.code === 'Enter' || event.code === 'NumpadEnter') {
         event.preventDefault();
-        getResults(analysisData).then((res) => setAnalysisResult(res));
+        getCanonizedUrl(inputRef.current?.value).then((res) =>
+          setCanonizedUrl(res)
+        );
       }
     };
     document.addEventListener('keydown', listener);
@@ -55,12 +62,12 @@ function ScanSection(): JSX.Element {
       <Header />
 
       <div className='mb-5 flex mt-10   bg-indigo-100 h-96  flex-wrap '>
-        <div className='prose-xl flex justify-center flex-grow-5 m-auto '>
+        <div className='prose prose-2xl flex justify-center flex-grow-5 m-auto text-zinc-800'>
           Analyze suspicious domains, IPs and URLs to detect malware.
         </div>
         <div className=' flex self-center flex-grow-2 justify-center m-auto'>
           <img
-            className='w-96 h-48'
+            className='w-80 h-40'
             alt='virusTotal Api'
             src={
               'https://upload.wikimedia.org/wikipedia/commons/b/b7/VirusTotal_logo.svg'
@@ -74,7 +81,7 @@ function ScanSection(): JSX.Element {
             autoComplete='off'
             type='text'
             name='value'
-            onChange={(e) => setInputUrl(e.target.value)}
+            inputRef={inputRef}
             placeholder='Scan an URL'
             className='w-full'
           />
