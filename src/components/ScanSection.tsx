@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnalysisResult, CanonizedUrl } from '../interfaces';
 import { getCanonizedUrl, getResults } from '../utils/virustotal';
 import Header from './Header';
+import mainProfile from '../assets/Canary.png';
 
 function ScanSection(): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
@@ -78,14 +79,12 @@ function ScanSection(): JSX.Element {
         </div>
 
         <img
-          className='w-96 h-48 flex m-auto justify-center lg:ml-6  lg:mx-20'
-          alt='virusTotal Api'
-          src={
-            'https://upload.wikimedia.org/wikipedia/commons/b/b7/VirusTotal_logo.svg'
-          }
+          className='w-96 h-48 flex m-auto justify-center lg:ml-6  lg:mx-20 object-contain'
+          alt='Project Canary'
+          src={mainProfile}
         />
       </div>
-      <div className='flex justify-center ml-4 mr-4'>
+      <div className='flex justify-center ml-4 mr-4 '>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
           <TextField
             autoComplete='off'
