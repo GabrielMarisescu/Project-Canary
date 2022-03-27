@@ -61,19 +61,29 @@ function ScanSection(): JSX.Element {
 
       <Header />
 
-      <div className='mb-5 flex mt-10   bg-indigo-100 h-96  flex-wrap '>
-        <div className='prose prose-2xl flex justify-center flex-grow-5 m-auto text-zinc-800'>
-          Analyze suspicious domains, IPs and URLs to detect malware.
+      <div className='mb-5 flex mt-10  bg-indigo-100 h-128 sm:h-96 lg:h-80 lg:flex-nowrap flex-wrap text-center antialiased font-sans'>
+        <div className='ml-5  flex flex-col  mt-10 justify-center'>
+          <div className='flex  text-zinc-800 prose-lg font-bold mb-10 text-center justify-center'>
+            <p className='mx-5 md:mx-10 lg:mx-20'>
+              Analyze suspicious domains, IPs and URLs to detect malware.
+            </p>
+          </div>
+          <div className='flex  text-zinc-800 prose-md '>
+            <p className='mx-5 md:mx-10 lg:mx-20'>
+              Project Canary is a virus analyzer which will show you whether or
+              not your links are safe for use or potentially dangerous using the
+              most performant antivirus engines.
+            </p>
+          </div>
         </div>
-        <div className=' flex self-center flex-grow-2 justify-center m-auto'>
-          <img
-            className='w-80 h-40'
-            alt='virusTotal Api'
-            src={
-              'https://upload.wikimedia.org/wikipedia/commons/b/b7/VirusTotal_logo.svg'
-            }
-          />
-        </div>
+
+        <img
+          className='w-96 h-48 flex m-auto justify-center lg:ml-6  lg:mx-20'
+          alt='virusTotal Api'
+          src={
+            'https://upload.wikimedia.org/wikipedia/commons/b/b7/VirusTotal_logo.svg'
+          }
+        />
       </div>
       <div className='flex justify-center ml-4 mr-4'>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
