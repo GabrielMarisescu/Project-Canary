@@ -3,16 +3,22 @@ import { Search } from '@mui/icons-material';
 import LinearProgress from '@mui/material/LinearProgress';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnalysisResult, CanonizedUrl } from '../interfaces';
-import { getCanonizedUrl, getResults } from '../utils/virustotal';
+import {
+  getCanonizedUrl,
+  getResults,
+  SortResponseCanonizedUrlData,
+} from '../utils/virustotal';
 import Header from './Header';
 import mainProfile from '../assets/Canary.png';
+import { Alert } from '@mui/material';
 
 function ScanSection(): JSX.Element {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
-  const analysisData: string = canonizedUrl?.data?.id!;
   const callStatus: string = analysisResult?.data?.attributes?.status!;
   const inputRef = useRef<any>(null);
+  const [analysisId, setAnalysisId] = useState<any>();
+  const [analysisErr, setAnalysisErr] = useState<any>();
 
   const submitData = (e: any) => {
     // todo: make it obvious for the user that the button is not clickable
@@ -25,11 +31,11 @@ function ScanSection(): JSX.Element {
 
   useEffect(() => {
     if (canonizedUrl) {
-      getResults(analysisData).then((res) => setAnalysisResult(res));
-      console.log('test', canonizedUrl);
+      SortResponseCanonizedUrlData(canonizedUrl, setAnalysisId, setAnalysisErr);
+      getResults(analysisId).then((res) => setAnalysisResult(res));
     }
-  }, [analysisData, canonizedUrl]);
-  // If the result is "queued", it will redo the api call to get the actual result. Enter key listener
+  }, [analysisId, canonizedUrl]);
+  // If the result is "queued", it will redo the api call to get the actual result + enter listener
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: any) => {
@@ -43,7 +49,7 @@ function ScanSection(): JSX.Element {
     document.addEventListener('keydown', listener);
     if (callStatus === 'queued') {
       intervalID = setInterval(() => {
-        getResults(analysisData).then((res) => setAnalysisResult(res));
+        getResults(analysisId).then((res) => setAnalysisResult(res));
       }, 4000);
     }
     return () => {
@@ -52,16 +58,14 @@ function ScanSection(): JSX.Element {
         clearInterval(intervalID);
       }
     };
-  }, [analysisData, callStatus]);
+  }, [analysisId, callStatus, canonizedUrl]);
 
   return (
     <>
       {analysisResult?.data?.attributes?.status === 'queued' ? (
         <LinearProgress />
       ) : null}
-
       <Header />
-
       <div className='mb-5 flex mt-10  bg-indigo-100 h-128 sm:h-96 lg:h-80 lg:flex-nowrap flex-wrap text-center antialiased font-sans'>
         <div className='ml-5  flex flex-col  mt-10 justify-center'>
           <div className='flex  text-zinc-800 prose-lg font-bold mb-10 text-center justify-center'>
@@ -84,6 +88,13 @@ function ScanSection(): JSX.Element {
           src={mainProfile}
         />
       </div>
+
+      {analysisErr ? (
+        <div className='flex justify-center'>
+          <Alert severity='error'>Please insert a valid URL</Alert>
+        </div>
+      ) : null}
+
       <div className='flex justify-center ml-4 mr-4 '>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
           <TextField
@@ -101,7 +112,6 @@ function ScanSection(): JSX.Element {
           />
         </form>
       </div>
-
       <div className='flex justify-center'>
         <div>
           {analysisResult

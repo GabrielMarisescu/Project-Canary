@@ -27,19 +27,34 @@ export async function getCanonizedUrl(url: any) {
  * @returns {Promise<AnalysisResult>} results of the analysis
  */
 export async function getResults(analysisData: string) {
-  try {
-    const request = await fetch(
-      'https://www.virustotal.com/api/v3/analyses/' + analysisData,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'x-apikey': `${apiKey}`,
-        },
-      }
-    );
-    return (await request.json()) as AnalysisResult;
-  } catch (err) {
-    console.error(err);
+  if (analysisData) {
+    try {
+      const request = await fetch(
+        'https://www.virustotal.com/api/v3/analyses/' + analysisData,
+        {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'x-apikey': `${apiKey}`,
+          },
+        }
+      );
+      return (await request.json()) as AnalysisResult;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+}
+
+export function SortResponseCanonizedUrlData(
+  data: any,
+  setStateId: any,
+  setStateErr: any
+): any {
+  // takes the CanonizedResponse and sets the data so TS is happy :)
+  if (data?.data?.id) {
+    setStateId(data.data.id);
+  } else if (data?.error.message) {
+    setStateErr(data?.error?.message);
   }
 }

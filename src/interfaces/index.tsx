@@ -19,13 +19,20 @@ export interface MainProps {
   result: number[] | undefined;
 }
 
-export interface CanonizedUrl {
+export interface CanonizedUrlSuccess {
   data: {
     id: string;
     type: string;
   };
 }
 
+export interface CanonizedUrlError {
+  error: {
+    code: string;
+    message: string;
+  };
+}
+export type CanonizedUrl = CanonizedUrlSuccess | CanonizedUrlError;
 export interface AnalysisResult {
   meta: {
     url_info: {
