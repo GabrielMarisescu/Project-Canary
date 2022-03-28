@@ -1,24 +1,22 @@
 import { TextField } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
-import LinearProgress from '@mui/material/LinearProgress';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnalysisResult, CanonizedUrl } from '../interfaces';
+import { CanonizedUrl } from '../interfaces';
 import {
   getCanonizedUrl,
-  getResults,
   SortResponseCanonizedUrlData,
 } from '../utils/virustotal';
-import Header from './Header';
 import mainProfile from '../assets/Canary.png';
 import { Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function ScanSection(): JSX.Element {
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
-  const callStatus: string = analysisResult?.data?.attributes?.status!;
   const inputRef = useRef<any>(null);
   const [analysisId, setAnalysisId] = useState<any>();
   const [analysisErr, setAnalysisErr] = useState<any>();
+  let navigate = useNavigate();
+  //  navigate(`/invoices/${newInvoice.id}`);
 
   const submitData = (e: any) => {
     // todo: make it obvious for the user that the button is not clickable
@@ -29,13 +27,14 @@ function ScanSection(): JSX.Element {
     );
   };
 
+  //Sorts the CanonizedUrl Data
   useEffect(() => {
     if (canonizedUrl) {
       SortResponseCanonizedUrlData(canonizedUrl, setAnalysisId, setAnalysisErr);
-      getResults(analysisId).then((res) => setAnalysisResult(res));
     }
-  }, [analysisId, canonizedUrl]);
-  // If the result is "queued", it will redo the api call to get the actual result + enter listener
+  }, [canonizedUrl]);
+  // If the result is "queued", it will redo the api call to get the actual result.
+  //Enter key event listener
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: any) => {
@@ -46,26 +45,24 @@ function ScanSection(): JSX.Element {
         );
       }
     };
+
     document.addEventListener('keydown', listener);
-    if (callStatus === 'queued') {
-      intervalID = setInterval(() => {
-        getResults(analysisId).then((res) => setAnalysisResult(res));
-      }, 4000);
-    }
+
     return () => {
       document.removeEventListener('keydown', listener);
       if (intervalID) {
         clearInterval(intervalID);
       }
     };
-  }, [analysisId, callStatus, canonizedUrl]);
+  }, [analysisId]);
+
+  //If it finds the analysisID,it goes to the page where it displays all the data in a  table format
+  if (analysisId) {
+    navigate(`/results/${analysisId}`);
+  }
 
   return (
     <>
-      {analysisResult?.data?.attributes?.status === 'queued' ? (
-        <LinearProgress />
-      ) : null}
-      <Header />
       <div className='mb-5 flex mt-10  bg-indigo-100 h-128 sm:h-96 lg:h-80 lg:flex-nowrap flex-wrap text-center antialiased font-sans'>
         <div className='ml-5  flex flex-col  mt-10 justify-center'>
           <div className='flex  text-zinc-800 prose-lg font-bold mb-10 text-center justify-center'>
@@ -89,13 +86,13 @@ function ScanSection(): JSX.Element {
         />
       </div>
 
-      {analysisErr ? (
+      {analysisErr === 'Unable to canonicalize url' && !analysisId ? (
         <div className='flex justify-center'>
           <Alert severity='error'>Please insert a valid URL</Alert>
         </div>
       ) : null}
 
-      <div className='flex justify-center ml-4 mr-4 '>
+      <div className='flex justify-center ml-4 mr-4  my-10'>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
           <TextField
             autoComplete='off'
@@ -111,19 +108,6 @@ function ScanSection(): JSX.Element {
             className=' ml-2 mt-2 active:border-indigo-300 cursor-pointer'
           />
         </form>
-      </div>
-      <div className='flex justify-center'>
-        <div>
-          {analysisResult
-            ? 'Harmless: ' + analysisResult.data?.attributes?.stats?.harmless
-            : null}
-        </div>
-        <div>
-          {analysisResult
-            ? '  Malicious: ' +
-              analysisResult.data?.attributes?.stats?.malicious
-            : null}
-        </div>
       </div>
     </>
   );
