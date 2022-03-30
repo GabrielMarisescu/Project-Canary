@@ -58,3 +58,8 @@ export function SortResponseCanonizedUrlData(
     setStateErr(data?.error?.message);
   }
 }
+
+// create an object for the Table
+export function createData(EngineName: any, Result: any) {
+  return { EngineName, Result };
+}

@@ -16,7 +16,6 @@ function ScanSection(): JSX.Element {
   const [analysisId, setAnalysisId] = useState<any>();
   const [analysisErr, setAnalysisErr] = useState<any>();
   let navigate = useNavigate();
-  //  navigate(`/invoices/${newInvoice.id}`);
 
   const submitData = (e: any) => {
     // todo: make it obvious for the user that the button is not clickable
@@ -33,6 +32,7 @@ function ScanSection(): JSX.Element {
       SortResponseCanonizedUrlData(canonizedUrl, setAnalysisId, setAnalysisErr);
     }
   }, [canonizedUrl]);
+
   // If the result is "queued", it will redo the api call to get the actual result.
   //Enter key event listener
   useEffect(() => {
@@ -56,7 +56,7 @@ function ScanSection(): JSX.Element {
     };
   }, [analysisId]);
 
-  //If it finds the analysisID,it goes to the page where it displays all the data in a  table format
+  //If it finds the analysisID(after the apicall),it goes to the page where it displays all the data in a  table format
   if (analysisId) {
     navigate(`/results/${analysisId}`);
   }
@@ -80,7 +80,7 @@ function ScanSection(): JSX.Element {
         </div>
 
         <img
-          className='w-96 h-48 flex m-auto justify-center lg:ml-6  lg:mx-20 object-contain'
+          className='w-80 h-40 flex m-auto justify-center lg:ml-6  lg:mx-20 object-contain'
           alt='Project Canary'
           src={mainProfile}
         />
