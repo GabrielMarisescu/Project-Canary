@@ -10,6 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { goToTop } from '../utils/utils';
 
 function ResultsTable() {
   //AnalysisResult
@@ -21,6 +22,7 @@ function ResultsTable() {
   const { analysisID } = useParams();
   let rows;
 
+  goToTop();
   //fetch the data once you get the analysisID param
   useEffect(() => {
     getResults(analysisID!).then((res) => setAnalysisResult(res));
@@ -80,8 +82,7 @@ function ResultsTable() {
       ) : (
         <>
           <div className='flex my-16  justify-center '>
-            <div className='mx-6'>Results for &nbsp;</div>
-            <div className='font-bold font-sans text-center'>
+            <div className='font-bold font-sans text-center  mx-12 md:mx-24'>
               {analysisResult?.meta.url_info.url}
             </div>
           </div>
