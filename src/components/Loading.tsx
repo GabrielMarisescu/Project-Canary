@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { EmotionJSX } from "@emotion/react/types/jsx-namespace";
-import { CircularProgress } from "@material-ui/core";
-import useTheme from "@material-ui/core/styles/useTheme";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import React from "react";
+import { css } from '@emotion/react';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { CircularProgress } from '@material-ui/core';
+import useTheme from '@material-ui/core/styles/useTheme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import React from 'react';
 
 export const LoadingPage = (): EmotionJSX.Element => {
   const styles = {
@@ -49,7 +49,7 @@ export const LoadingPage = (): EmotionJSX.Element => {
   };
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <div css={styles.root}>

@@ -1,4 +1,4 @@
-import { AnalysisResult, CanonizedUrl } from "interfaces";
+import { AnalysisResult, CanonizedUrl } from 'interfaces';
 
 const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -8,11 +8,11 @@ const apiKey = process.env.REACT_APP_API_KEY;
  */
 export async function getCanonizedUrl(url: any) {
   try {
-    const request = await fetch("https://www.virustotal.com/api/v3/urls", {
-      method: "POST",
+    const request = await fetch('https://www.virustotal.com/api/v3/urls', {
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "x-apikey": `${apiKey}`,
+        Accept: 'application/json',
+        'x-apikey': `${apiKey}`,
       },
       body: new URLSearchParams({ url: `${url}` }),
     });
@@ -30,12 +30,12 @@ export async function getResults(analysisData: string) {
   if (analysisData) {
     try {
       const request = await fetch(
-        "https://www.virustotal.com/api/v3/analyses/" + analysisData,
+        'https://www.virustotal.com/api/v3/analyses/' + analysisData,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            Accept: "application/json",
-            "x-apikey": `${apiKey}`,
+            Accept: 'application/json',
+            'x-apikey': `${apiKey}`,
           },
         }
       );

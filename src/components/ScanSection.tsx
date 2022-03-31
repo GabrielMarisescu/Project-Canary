@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import mainProfile from "assets/Canary.png";
-import { TextField } from "@material-ui/core";
-import { Search } from "@mui/icons-material";
-import { CanonizedUrl } from "interfaces";
+import React, { useEffect, useRef, useState } from 'react';
+import mainProfile from 'assets/Canary.png';
+import { TextField } from '@material-ui/core';
+import { Search } from '@mui/icons-material';
+import { CanonizedUrl } from 'interfaces';
 import {
   getCanonizedUrl,
   SortResponseCanonizedUrlData,
-} from "utils/virustotal";
-import { Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+} from 'utils/virustotal';
+import { Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function ScanSection(): JSX.Element {
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
@@ -38,7 +38,7 @@ function ScanSection(): JSX.Element {
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: any) => {
-      if (event.code === "Enter" || event.code === "NumpadEnter") {
+      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
         event.preventDefault();
         getCanonizedUrl(inputRef.current?.value).then((res) =>
           setCanonizedUrl(res)
@@ -46,10 +46,10 @@ function ScanSection(): JSX.Element {
       }
     };
 
-    document.addEventListener("keydown", listener);
+    document.addEventListener('keydown', listener);
 
     return () => {
-      document.removeEventListener("keydown", listener);
+      document.removeEventListener('keydown', listener);
       if (intervalID) {
         clearInterval(intervalID);
       }
@@ -86,7 +86,7 @@ function ScanSection(): JSX.Element {
         />
       </div>
 
-      {analysisErr === "Unable to canonicalize url" && !analysisId ? (
+      {analysisErr === 'Unable to canonicalize url' && !analysisId ? (
         <div className="flex justify-center">
           <Alert severity="error">Please insert a valid URL</Alert>
         </div>
