@@ -42,8 +42,9 @@ export const LoadingPage = (): EmotionJSX.Element => {
           color: #ff1493;
         }
       }
-      animation: MuiCircularProgress-keyframes-circular-rotate 1.4s linear infinite,
-      changeColor 2s linear infinite;
+      animation: MuiCircularProgress-keyframes-circular-rotate 1.4s linear
+          infinite,
+        changeColor 2s linear infinite;
     `,
   };
 
@@ -51,12 +52,12 @@ export const LoadingPage = (): EmotionJSX.Element => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <div css={ styles.root }>
+    <div css={styles.root}>
       <CircularProgress
-        thickness={ 5 }
-        size={ isMobile ? 75 : 100 }
+        thickness={5}
+        size={isMobile ? 75 : 100}
         disableShrink
-        css={ styles.circularProgress }
+        css={styles.circularProgress}
       />
     </div>
   );

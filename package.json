@@ -28,7 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write ."
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +53,7 @@
     "@tailwindcss/typography": "^0.5.2",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.6",
+    "prettier": "^2.6.1",
     "tailwindcss": "^3.0.23"
   }
 }

@@ -1,14 +1,14 @@
-import { TextField } from '@material-ui/core';
-import { Search } from '@mui/icons-material';
-import React, { useEffect, useRef, useState } from 'react';
-import { CanonizedUrl } from '../interfaces';
+import React, { useEffect, useRef, useState } from "react";
+import mainProfile from "assets/Canary.png";
+import { TextField } from "@material-ui/core";
+import { Search } from "@mui/icons-material";
+import { CanonizedUrl } from "interfaces";
 import {
   getCanonizedUrl,
   SortResponseCanonizedUrlData,
-} from '../utils/virustotal';
-import mainProfile from '../assets/Canary.png';
-import { Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+} from "utils/virustotal";
+import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function ScanSection(): JSX.Element {
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
@@ -38,7 +38,7 @@ function ScanSection(): JSX.Element {
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: any) => {
-      if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
         event.preventDefault();
         getCanonizedUrl(inputRef.current?.value).then((res) =>
           setCanonizedUrl(res)
@@ -46,10 +46,10 @@ function ScanSection(): JSX.Element {
       }
     };
 
-    document.addEventListener('keydown', listener);
+    document.addEventListener("keydown", listener);
 
     return () => {
-      document.removeEventListener('keydown', listener);
+      document.removeEventListener("keydown", listener);
       if (intervalID) {
         clearInterval(intervalID);
       }
@@ -63,15 +63,15 @@ function ScanSection(): JSX.Element {
 
   return (
     <>
-      <div className='mb-5 flex mt-10  bg-indigo-100 h-128 sm:h-96 lg:h-80 lg:flex-nowrap flex-wrap text-center antialiased font-sans'>
-        <div className='ml-5  flex flex-col  mt-10 justify-center'>
-          <div className='flex  text-zinc-800 prose-lg font-bold mb-10 text-center justify-center'>
-            <p className='mx-5 md:mx-10 lg:mx-20'>
+      <div className="flex flex-wrap mt-10 mb-5 font-sans antialiased text-center bg-indigo-100 h-128 sm:h-96 lg:h-80 lg:flex-nowrap">
+        <div className="flex flex-col justify-center mt-10 ml-5">
+          <div className="flex justify-center mb-10 font-bold prose-lg text-center text-zinc-800">
+            <p className="mx-5 md:mx-10 lg:mx-20">
               Analyze suspicious domains, IPs and URLs to detect malware.
             </p>
           </div>
-          <div className='flex  text-zinc-800 prose-md '>
-            <p className='mx-5 md:mx-10 lg:mx-20'>
+          <div className="flex text-zinc-800 prose-md ">
+            <p className="mx-5 md:mx-10 lg:mx-20">
               Project Canary is a virus analyzer which will show you whether or
               not your links are safe for use or potentially dangerous using the
               most performant antivirus engines.
@@ -80,36 +80,36 @@ function ScanSection(): JSX.Element {
         </div>
 
         <img
-          className='w-80 h-40 flex m-auto justify-center lg:ml-6  lg:mx-20 object-contain'
-          alt='Project Canary'
+          className="flex justify-center object-contain h-40 m-auto w-80 lg:ml-6 lg:mx-20"
+          alt="Project Canary"
           src={mainProfile}
         />
       </div>
 
-      {analysisErr === 'Unable to canonicalize url' && !analysisId ? (
-        <div className='flex justify-center'>
-          <Alert severity='error'>Please insert a valid URL</Alert>
+      {analysisErr === "Unable to canonicalize url" && !analysisId ? (
+        <div className="flex justify-center">
+          <Alert severity="error">Please insert a valid URL</Alert>
         </div>
       ) : (
-        <div className='justify-center invisible flex '>
-          <Alert severity='error'>Please insert a valid URL</Alert>
+        <div className="flex justify-center invisible ">
+          <Alert severity="error">Please insert a valid URL</Alert>
         </div>
       )}
 
-      <div className='flex justify-center ml-4 mr-4  my-10'>
-        <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
+      <div className="flex justify-center my-10 ml-4 mr-4">
+        <form className="flex justify-center w-screen p-1 mt-10 ml-2 border-none outline-none md:w-1/2">
           <TextField
-            autoComplete='off'
-            type='text'
-            name='value'
+            autoComplete="off"
+            type="text"
+            name="value"
             inputRef={inputRef}
-            placeholder='Scan an URL'
-            className='w-full'
+            placeholder="Scan an URL"
+            className="w-full"
           />
           <Search
-            type='submit'
+            type="submit"
             onClick={submitData}
-            className=' ml-2 mt-2 active:border-indigo-300 cursor-pointer'
+            className="mt-2 ml-2 cursor-pointer active:border-indigo-300"
           />
         </form>
       </div>

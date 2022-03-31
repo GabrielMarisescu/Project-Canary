@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { AnalysisResult } from '../interfaces';
-import { getResults, createData } from '../utils/virustotal';
-import { LoadingPage } from './Loading';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { goToTop } from '../utils/utils';
+import React, { useEffect, useState } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { useParams } from "react-router-dom";
+import { AnalysisResult } from "interfaces";
+import { getResults, createData } from "utils/virustotal";
+import { LoadingPage } from "./Loading";
+import { goToTop } from "utils/utils";
 
 function ResultsTable() {
   //AnalysisResult
@@ -33,7 +33,7 @@ function ResultsTable() {
   useEffect(() => {
     let intervalID: NodeJS.Timer;
 
-    if (callStatus === 'queued') {
+    if (callStatus === "queued") {
       intervalID = setInterval(() => {
         getResults(analysisID!).then((res) => setAnalysisResult(res));
       }, 4000);
@@ -47,7 +47,7 @@ function ResultsTable() {
 
   //sorts the data into something we can use
   useEffect(() => {
-    if (callStatus === 'completed' && !tableData) {
+    if (callStatus === "completed" && !tableData) {
       setTableData(Object.values(analysisResult?.data?.attributes.results));
     }
 
@@ -64,10 +64,10 @@ function ResultsTable() {
     let sortedResultsUnrated: string[] = [];
     let sortedEngineNameUnrated: string[] = [];
     tableData.forEach((e: any, i: number) => {
-      if (tableDataResult[i] === 'malicious') {
+      if (tableDataResult[i] === "malicious") {
         sortedResults.unshift(tableDataResult[i]);
         sortedEngineName.unshift(tableDataEngineName[i]);
-      } else if (tableDataResult[i] === 'clean') {
+      } else if (tableDataResult[i] === "clean") {
         sortedResults.push(tableDataResult[i]);
         sortedEngineName.push(tableDataEngineName[i]);
       } else {
@@ -85,42 +85,42 @@ function ResultsTable() {
   }
 
   const showResultData = (arg: any) => {
-    if (arg === 'clean') {
-      return <div className='text-green-800 font-medium'> {arg}</div>;
-    } else if (arg === 'malicious') {
-      return <div className='text-red-800 font-medium'> {arg}</div>;
+    if (arg === "clean") {
+      return <div className="font-medium text-green-800"> {arg}</div>;
+    } else if (arg === "malicious") {
+      return <div className="font-medium text-red-800"> {arg}</div>;
     } else {
-      return <div className=' opacity-50 font-medium'> {arg}</div>;
+      return <div className="font-medium opacity-50 "> {arg}</div>;
     }
   };
 
   //TO DO NEED TO REFACTOR THE TABLE INTO AN ANOTHER COMPONENT
   return (
     <>
-      {callStatus === 'queued' || !callStatus ? (
+      {callStatus === "queued" || !callStatus ? (
         <>
-          <div className='flex justify-center prose-lg mt-12 font-bold font-sans text-center  mx-12 md:mx-24'>
+          <div className="flex justify-center mx-12 mt-12 font-sans font-bold prose-lg text-center md:mx-24">
             Please wait while we analyze your link
           </div>
           <LoadingPage />
         </>
       ) : (
         <>
-          <div className='flex my-16  justify-center '>
-            <div className='font-bold font-sans text-center  mx-12 md:mx-24'>
+          <div className="flex justify-center my-16 ">
+            <div className="mx-12 font-sans font-bold text-center md:mx-24">
               {analysisResult?.meta.url_info.url}
             </div>
           </div>
-          <div className=' mx-5 md:mx-36 mt-16'>
+          <div className="mx-5 mt-16 md:mx-36">
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 200, p: 2 }} aria-label='simple table'>
+              <Table sx={{ minWidth: 200, p: 2 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <span className='font-bold'> EngineName </span>
+                      <span className="font-bold"> EngineName </span>
                     </TableCell>
-                    <TableCell align='right'>
-                      <span className='font-bold'> Result </span>
+                    <TableCell align="right">
+                      <span className="font-bold"> Result </span>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -128,12 +128,12 @@ function ResultsTable() {
                   {rows?.map((row: any) => (
                     <TableRow
                       key={row?.EngineName}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component='th' scope='row'>
+                      <TableCell component="th" scope="row">
                         {row?.EngineName}
                       </TableCell>
-                      <TableCell align='right'>
+                      <TableCell align="right">
                         {showResultData(row.Result)}
                       </TableCell>
                     </TableRow>
