@@ -90,7 +90,11 @@ function ScanSection(): JSX.Element {
         <div className='flex justify-center'>
           <Alert severity='error'>Please insert a valid URL</Alert>
         </div>
-      ) : null}
+      ) : (
+        <div className='justify-center invisible flex '>
+          <Alert severity='error'>Please insert a valid URL</Alert>
+        </div>
+      )}
 
       <div className='flex justify-center ml-4 mr-4  my-10'>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>

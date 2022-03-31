@@ -59,8 +59,28 @@ function ResultsTable() {
 
   //puts all the results data into an array which we can pass to the Table (WILL NEED SORTING)
   if (tableDataEngineName && tableDataResult) {
-    rows = tableData?.map((e: any, i: any) =>
-      createData(tableDataEngineName[i], tableDataResult[i])
+    let sortedResults: string[] = [];
+    let sortedEngineName: string[] = [];
+    let sortedResultsUnrated: string[] = [];
+    let sortedEngineNameUnrated: string[] = [];
+    tableData.forEach((e: any, i: number) => {
+      if (tableDataResult[i] === 'malicious') {
+        sortedResults.unshift(tableDataResult[i]);
+        sortedEngineName.unshift(tableDataEngineName[i]);
+      } else if (tableDataResult[i] === 'clean') {
+        sortedResults.push(tableDataResult[i]);
+        sortedEngineName.push(tableDataEngineName[i]);
+      } else {
+        sortedResultsUnrated.push(tableDataResult[i]);
+        sortedEngineNameUnrated.push(tableDataEngineName[i]);
+      }
+    });
+
+    const finalResults = sortedResults.concat(sortedResultsUnrated);
+    const finalEngine = sortedEngineName.concat(sortedEngineNameUnrated);
+    console.log(sortedResults, sortedEngineName);
+    rows = tableData.map((e: any, i: number) =>
+      createData(finalEngine[i], finalResults[i])
     );
   }
 
@@ -78,7 +98,12 @@ function ResultsTable() {
   return (
     <>
       {callStatus === 'queued' || !callStatus ? (
-        <LoadingPage />
+        <>
+          <div className='flex justify-center prose-lg mt-12 font-bold font-sans text-center  mx-12 md:mx-24'>
+            Please wait while we analyze your link
+          </div>
+          <LoadingPage />
+        </>
       ) : (
         <>
           <div className='flex my-16  justify-center '>
