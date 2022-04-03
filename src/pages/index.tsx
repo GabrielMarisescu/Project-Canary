@@ -5,8 +5,6 @@ import ScanSection from '../components/ScanSection';
 import Header from '../components/Header';
 import ResultsTable from '../components/ResultsTable';
 
-//routing here
-
 function index(): JSX.Element {
   console.log('Hello :D, remember to smile :)');
   return (
