@@ -96,7 +96,7 @@ function ScanSection(): JSX.Element {
         </div>
       )}
 
-      <div className='flex justify-center ml-4 mr-4  my-10'>
+      <div className='flex justify-center ml-4 mr-4  my-5'>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
           <TextField
             autoComplete='off'

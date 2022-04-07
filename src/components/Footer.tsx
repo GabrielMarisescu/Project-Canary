@@ -4,7 +4,7 @@ import githubLogo from '../assets/githubLogo.svg';
 
 function Footer() {
   return (
-    <div className='overflow-hidden text-zinc-800 antialiased invisible  md:visible  h-0 md:h-52 mt-24'>
+    <div className='overflow-hidden text-zinc-800 antialiased invisible  md:visible h-64 bg-indigo-100 xl:h-72'>
       <footer className='flex w-screen h-36 mt-5 bg-indigo-100'>
         <div className=' flex-grow-4 flex'>
           <div className='flex flex-col mx-12 justify-center mb-10 text-center'>
