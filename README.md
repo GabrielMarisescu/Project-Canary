@@ -12,6 +12,13 @@ Project Canary is a virus scanning website for links.
   with [create-react-app](https://github.com/facebook/create-react-app) with
   typescript
 
+## Preview
+
+<img width="1440" alt="Screenshot 2022-04-07 at 10 30 11" src="https://user-images.githubusercontent.com/43650393/162156550-7990e017-a378-4339-bead-124c57adefff.png">
+<img width="1440" alt="Screenshot 2022-04-07 at 10 30 42" src="https://user-images.githubusercontent.com/43650393/162156584-6cc47637-2c63-4324-94e5-765b9857629e.png">
+
+
+
 ## Installation
 
 The steps below will allow you to run this website locally
