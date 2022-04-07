@@ -60,6 +60,6 @@ export function SortResponseCanonizedUrlData(
 }
 
 // create an object for the Table
-export function createData(EngineName: any, Result: any) {
+export function createData(EngineName: string, Result: string) {
   return { EngineName, Result };
 }

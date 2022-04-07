@@ -23,6 +23,7 @@ function ResultsTable() {
   let rows;
 
   goToTop();
+
   //fetch the data once you get the analysisID param
   useEffect(() => {
     getResults(analysisID!).then((res) => setAnalysisResult(res));

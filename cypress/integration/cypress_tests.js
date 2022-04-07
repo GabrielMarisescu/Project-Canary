@@ -44,9 +44,9 @@ describe('Github page', () => {
 describe('LinkedIn Page', () => {
   it('Go to the LinkedIn Page', () => {
     cy.visit('http://localhost:3000/');
-
     cy.get(
       '[href="https://www.linkedin.com/in/gabriel-marisescu/"] > .object-contain'
     ).click();
+    cy.url().should('include', 'gabriel-marisescu');
   });
 });
