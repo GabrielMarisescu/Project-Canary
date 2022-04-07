@@ -5,6 +5,7 @@ Project Canary is a virus scanning website for links.
 * Reports back to you if a link is malicious
 * Actively maintained by developers
 * Feel free to make pull requests or Issues
+* Uses Cypress as a testing tool.
 * The project uses
   the [VirusTotal API](https://developers.virustotal.com/reference/overview) for
   analysis
