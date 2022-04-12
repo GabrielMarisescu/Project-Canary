@@ -37,7 +37,7 @@ function ResultsTable() {
     if (callStatus === 'queued') {
       intervalID = setInterval(() => {
         getResults(analysisID!).then((res) => setAnalysisResult(res));
-      }, 4000);
+      }, 3000);
     }
     return () => {
       if (intervalID) {
