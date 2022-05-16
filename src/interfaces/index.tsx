@@ -71,3 +71,10 @@ export interface listener {
   code: string;
   preventDefault: () => void;
 }
+
+export interface filteredTableData {
+  category: string;
+  result: string;
+  method: string;
+  engine_name: string;
+}

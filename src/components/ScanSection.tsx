@@ -25,7 +25,6 @@ function ScanSection(): JSX.Element {
     SortResponseCanonizedUrlData(canonizedUrl, setAnalysisId, setAnalysisErr);
   }, [canonizedUrl]);
 
-  // If the result is "queued", it will redo the api call to get the actual result.
   useEffect(() => {
     let intervalID: NodeJS.Timer;
     const listener = (event: listener): void => {
