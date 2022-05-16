@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CanonizedUrl } from '../interfaces';
 import {
   getCanonizedUrl,
@@ -8,14 +8,14 @@ import {
 } from '../utils/virustotal';
 import mainProfile from '../assets/Canary.png';
 import { Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 
 function ScanSection(): JSX.Element {
   const [canonizedUrl, setCanonizedUrl] = useState<CanonizedUrl>();
   const inputRef = useRef<any>(null);
-  const [analysisId, setAnalysisId] = useState<any>();
-  const [analysisErr, setAnalysisErr] = useState<any>();
-  let navigate = useNavigate();
+  const [analysisId, setAnalysisId] = useState<string>();
+  const [analysisErr, setAnalysisErr] = useState<string>();
+  let navigate: NavigateFunction = useNavigate();
 
   const submitData = (e: any) => {
     // todo: make it obvious for the user that the button is not clickable
