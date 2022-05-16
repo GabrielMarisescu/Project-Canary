@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core';
 import { Search } from '@mui/icons-material';
 import { useEffect, useRef, useState } from 'react';
-import { CanonizedUrl } from '../interfaces';
+import { CanonizedUrl, listener } from '../interfaces';
 import {
   getCanonizedUrl,
   SortResponseCanonizedUrlData,
@@ -17,30 +17,21 @@ function ScanSection(): JSX.Element {
   const [analysisErr, setAnalysisErr] = useState<string>();
   let navigate: NavigateFunction = useNavigate();
 
-  const submitData = (e: any) => {
-    // todo: make it obvious for the user that the button is not clickable
-    e.preventDefault(); // prevents user from clicking the search button when already searching
-    //Using the Ref element to get the value for the canonized Url.
-    getCanonizedUrl(inputRef.current?.value).then((res) =>
-      setCanonizedUrl(res)
-    );
+  const submitData = (event: any) => {
+    event.preventDefault();
+    getCanonizedUrl(inputRef.current.value).then((res) => setCanonizedUrl(res));
   };
-
-  //Sorts the CanonizedUrl Data
   useEffect(() => {
-    if (canonizedUrl) {
-      SortResponseCanonizedUrlData(canonizedUrl, setAnalysisId, setAnalysisErr);
-    }
+    SortResponseCanonizedUrlData(canonizedUrl, setAnalysisId, setAnalysisErr);
   }, [canonizedUrl]);
 
   // If the result is "queued", it will redo the api call to get the actual result.
-  //Enter key event listener
   useEffect(() => {
     let intervalID: NodeJS.Timer;
-    const listener = (event: any) => {
+    const listener = (event: listener): void => {
       if (event.code === 'Enter' || event.code === 'NumpadEnter') {
         event.preventDefault();
-        getCanonizedUrl(inputRef.current?.value).then((res) =>
+        getCanonizedUrl(inputRef.current.value).then((res) =>
           setCanonizedUrl(res)
         );
       }
@@ -86,6 +77,7 @@ function ScanSection(): JSX.Element {
         />
       </div>
 
+      {/*TODO Refactor*/}
       {analysisErr === 'Unable to canonicalize url' && !analysisId ? (
         <div className='flex justify-center'>
           <Alert severity='error'>Please insert a valid URL</Alert>
@@ -95,7 +87,6 @@ function ScanSection(): JSX.Element {
           <Alert severity='error'>Please insert a valid URL</Alert>
         </div>
       )}
-
       <div className='flex justify-center ml-4 mr-4  my-5'>
         <form className='mt-10 w-screen md:w-1/2 p-1 ml-2 border-none outline-none flex justify-center'>
           <TextField

@@ -66,3 +66,8 @@ export interface AnalysisResult {
     };
   };
 }
+
+export interface listener {
+  code: string;
+  preventDefault: () => void;
+}
