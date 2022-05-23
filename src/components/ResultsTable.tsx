@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Params, useParams } from 'react-router-dom';
-import { AnalysisResult, filteredTableData } from '../interfaces';
-import { getResults, createData } from '../utils/virustotal';
+import { AnalysisResult } from '../interfaces';
+import { getResults, finalTableData } from '../utils/virustotal';
 import { LoadingPage } from './Loading';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,14 +13,13 @@ import Paper from '@mui/material/Paper';
 import { goToTop } from '../utils/utils';
 
 function ResultsTable() {
-  //AnalysisResult
-  const [analysisResult, setAnalysisResult] = useState<any>();
-  const [tableData, setTableData] = useState<any>();
+  const [analysisResult, setAnalysisResult] = useState<AnalysisResult>();
+  const [tableData, setTableData] = useState<string[][]>();
   const [tableDataResult, setTableDataResult] = useState<any>();
   const [tableDataEngineName, setTableDataEngineName] = useState<any>();
   const callStatus: string = analysisResult?.data?.attributes?.status!;
   const { analysisID }: Readonly<Params<string>> = useParams();
-  let rows;
+  let rows: finalTableData[] = [];
 
   goToTop();
 
@@ -48,13 +47,12 @@ function ResultsTable() {
     if (callStatus === 'completed' && !tableData) {
       //Refactor
       setTableData(Object.values(analysisResult?.data?.attributes.results));
+      console.log(tableData);
     }
 
     if (tableData) {
-      setTableDataResult(tableData.map((e: filteredTableData) => e.result));
-      setTableDataEngineName(
-        tableData.map((e: filteredTableData) => e.engine_name)
-      );
+      setTableDataResult(tableData.map((e: any) => e.result));
+      setTableDataEngineName(tableData.map((e: any) => e.engine_name));
     }
   }, [analysisResult, callStatus, tableData]);
 
@@ -64,7 +62,7 @@ function ResultsTable() {
     let sortedEngineName: string[] = [];
     let sortedResultsUnrated: string[] = [];
     let sortedEngineNameUnrated: string[] = [];
-    tableData.forEach((e: any, i: number) => {
+    tableData!.forEach((e: any, i: number) => {
       if (tableDataResult[i] === 'malicious') {
         sortedResults.unshift(tableDataResult[i]);
         sortedEngineName.unshift(tableDataEngineName[i]);
@@ -80,9 +78,9 @@ function ResultsTable() {
     const finalResults = sortedResults.concat(sortedResultsUnrated);
     const finalEngine = sortedEngineName.concat(sortedEngineNameUnrated);
     console.log(sortedResults, sortedEngineName);
-    rows = tableData.map((e: any, i: number) =>
-      createData(finalEngine[i], finalResults[i])
-    );
+    rows = tableData!.map((e: any, i: number) => {
+      return { EngineName: finalEngine[i], Result: finalResults[i] };
+    });
   }
 
   const showResultData = (arg: string) => {
@@ -128,7 +126,7 @@ function ResultsTable() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows?.map((row: any) => (
+                  {rows?.map((row: finalTableData) => (
                     <TableRow
                       key={row?.EngineName}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

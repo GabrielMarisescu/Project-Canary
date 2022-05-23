@@ -33,12 +33,14 @@ export interface CanonizedUrlError {
   };
 }
 export type CanonizedUrl = CanonizedUrlSuccess | CanonizedUrlError;
+
+export interface listener {
+  code: string;
+  preventDefault: () => void;
+}
 export interface AnalysisResult {
   meta: {
-    url_info: {
-      id: string;
-      url: string;
-    };
+    url_info: { url: string; id: string };
   };
   data: {
     attributes: {
@@ -51,12 +53,7 @@ export interface AnalysisResult {
         undetected: number;
         timeout: number;
       };
-      results: {
-        category: string;
-        result: string;
-        method: string;
-        engine_name: string;
-      }[];
+      results: any;
     };
     type: string;
     id: string;
@@ -65,16 +62,4 @@ export interface AnalysisResult {
       self: string;
     };
   };
-}
-
-export interface listener {
-  code: string;
-  preventDefault: () => void;
-}
-
-export interface filteredTableData {
-  category: string;
-  result: string;
-  method: string;
-  engine_name: string;
 }
