@@ -2,6 +2,7 @@
 
 Project Canary is a virus scanning website for links.
 
+* Currently there is a CORS error which doesn't allow normal functionality.
 * Reports back to you if a link is malicious
 * Actively maintained by developers
 * Feel free to make pull requests or Issues
