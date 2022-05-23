@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Params, useParams } from 'react-router-dom';
 import { AnalysisResult, filteredTableData } from '../interfaces';
 import { getResults, createData } from '../utils/virustotal';
 import { LoadingPage } from './Loading';
@@ -19,7 +19,7 @@ function ResultsTable() {
   const [tableDataResult, setTableDataResult] = useState<any>();
   const [tableDataEngineName, setTableDataEngineName] = useState<any>();
   const callStatus: string = analysisResult?.data?.attributes?.status!;
-  const { analysisID } = useParams();
+  const { analysisID }: Readonly<Params<string>> = useParams();
   let rows;
 
   goToTop();
@@ -28,15 +28,14 @@ function ResultsTable() {
     getResults(analysisID!).then((res) => setAnalysisResult(res));
   }, [analysisID]);
 
-  // If the result is "queued", it will redo the api call to get the actual result.
-
+  // Engine needs time to process the link, redo the api all if the element is "queued"
   useEffect(() => {
     let intervalID: NodeJS.Timer;
 
     if (callStatus === 'queued') {
       intervalID = setInterval(() => {
         getResults(analysisID!).then((res) => setAnalysisResult(res));
-      }, 3000);
+      }, 2500);
     }
     return () => {
       if (intervalID) {
@@ -45,9 +44,9 @@ function ResultsTable() {
     };
   }, [callStatus, analysisID]);
 
-  // data sorting
   useEffect(() => {
     if (callStatus === 'completed' && !tableData) {
+      //Refactor
       setTableData(Object.values(analysisResult?.data?.attributes.results));
     }
 
@@ -57,10 +56,9 @@ function ResultsTable() {
         tableData.map((e: filteredTableData) => e.engine_name)
       );
     }
-    console.log(tableData);
   }, [analysisResult, callStatus, tableData]);
 
-  //puts all the results data into an array which we can pass to the Table (WILL NEED SORTING)
+  //puts all the results data into an array which we can pass to the Table (WILL NEED REFACTORING)
   if (tableDataEngineName && tableDataResult) {
     let sortedResults: string[] = [];
     let sortedEngineName: string[] = [];
@@ -87,7 +85,7 @@ function ResultsTable() {
     );
   }
 
-  const showResultData = (arg: any) => {
+  const showResultData = (arg: string) => {
     if (arg === 'clean') {
       return <div className='text-green-800 font-medium'> {arg}</div>;
     } else if (arg === 'malicious') {
@@ -101,7 +99,10 @@ function ResultsTable() {
     <>
       {callStatus === 'queued' || !callStatus ? (
         <>
-          <div className='flex justify-center prose-lg mt-12 font-bold font-sans text-center  mx-12 md:mx-24'>
+          <div
+            className='flex justify-center prose-lg mt-12 font-bold font-sans text-center  mx-12 md:mx-24'
+            lang='en'
+          >
             Please wait while we analyze your link
           </div>
           <LoadingPage />

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, Theme } from '@material-ui/core';
 import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -15,8 +15,8 @@ export const LoadingPage = (): EmotionJSX.Element => {
       background-color: white;
     `,
   };
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme: Theme = useTheme();
+  const isMobile: boolean = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <div css={styles.root}>
